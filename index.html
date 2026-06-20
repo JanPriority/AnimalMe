@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AnimalMe — What is your spirit animal?</title>
+<meta name="description" content="A 5-minute personality quiz that reveals your spirit animal and colour from your real traits and preferences. Free, no sign-up. / Jaké jsi zvíře? Zjisti to za 5 minut.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0a0a0f">
+<link rel="canonical" href="https://animal-me.com/">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:site_name" content="AnimalMe">
+<meta property="og:title" content="AnimalMe — What is your spirit animal?">
+<meta property="og:description" content="A 5-minute quiz that reveals your spirit animal and colour from your real traits and preferences.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://animal-me.com/">
+<meta property="og:image" content="https://animal-me.com/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="cs_CZ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AnimalMe — What is your spirit animal?">
+<meta name="twitter:description" content="A 5-minute quiz that reveals your spirit animal and colour from your real traits and preferences.">
+<meta name="twitter:image" content="https://animal-me.com/og.jpg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"AnimalMe","url":"https://animal-me.com/","applicationCategory":"LifestyleApplication","operatingSystem":"Any","description":"A 5-minute personality quiz that reveals your spirit animal and colour from your real traits and preferences.","inLanguage":["en","cs"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0f; --bg2:#15151f; --card:rgba(255,255,255,.03);
+    --line:rgba(255,255,255,.08); --txt:#e7e7ee; --mut:#8a8a98;
+    --accent:#8b5cf6; --accent2:#6366f1;
+  }
+  body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.55}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  .intro-wrap{position:relative;width:100%;max-width:680px;margin:26px auto 6px}
+  .intro-img{display:block;width:100%;border-radius:16px}
+  .intro-badge{position:absolute;right:12px;bottom:12px;background:rgba(8,8,12,.62);backdrop-filter:blur(4px);color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.02em;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.18)}
+
+  .topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;max-width:720px;margin:0 auto}
+  .brand{font-weight:700;letter-spacing:.04em;font-size:1.1rem}
+  .brand span{color:var(--accent)}
+  .langs{display:flex;gap:4px}
+  .langs button{background:transparent;border:1px solid var(--line);color:var(--mut);padding:5px 10px;border-radius:8px;cursor:pointer;font-size:.8rem}
+  .langs button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .hero{text-align:center;padding:36px 20px 28px;background:linear-gradient(135deg,#0a0a0f,#1a1a2e 60%,#16213e)}
+  .hero h1{font-size:2rem;font-weight:300;letter-spacing:.04em;color:#fff;margin-bottom:10px}
+  .hero p{color:var(--mut);max-width:480px;margin:0 auto}
+  .privacy-note{font-size:.8rem;color:var(--mut);margin-top:14px;opacity:.85}
+
+  .progress-wrap{position:sticky;top:0;z-index:50;background:var(--bg);padding:10px 20px;border-bottom:1px solid var(--line)}
+  .progress-inner{max-width:720px;margin:0 auto}
+  .bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+  .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .35s}
+  .ptext{font-size:.78rem;color:var(--mut);text-align:right;margin-top:5px}
+
+  .section{margin:40px 0}
+  .section-head{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .section-num{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:600;color:#fff;flex-shrink:0}
+  .section-title{font-size:1.2rem;font-weight:400;color:#fff}
+
+  .q{margin-bottom:26px;padding:20px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+  .q:has(input:checked){border-color:rgba(139,92,246,.35)}
+  .q-label{font-weight:500;margin-bottom:6px;color:#d8d8e0}
+  .q-num{color:var(--accent);font-weight:600;margin-right:6px}
+  .hint{font-size:.8rem;color:var(--mut);font-style:italic;margin-bottom:12px}
+  .options{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .option{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border-radius:8px;cursor:pointer;border:1px solid var(--line);transition:background .15s,border-color .15s}
+  .option:hover{background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.25)}
+  .option:has(input:checked){background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.45)}
+  .option:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+  .option input{position:absolute;opacity:0;width:1px;height:1px}
+  .mark{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.25);flex-shrink:0;margin-top:2px;position:relative;transition:.15s}
+  .option.multi .mark{border-radius:5px}
+  .option:has(input:checked) .mark{border-color:var(--accent);background:var(--accent)}
+  .option:has(input:checked) .mark::after{content:'';position:absolute;width:6px;height:6px;border-radius:50%;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .option.multi:has(input:checked) .mark::after{content:'✓';width:auto;height:auto;border-radius:0;background:none;font-size:11px;font-weight:700;color:#fff}
+  .otext{font-size:.92rem;color:#bcbcc6}
+  .option:has(input:checked) .otext{color:var(--txt)}
+
+  .slider-row{padding:6px 0}
+  .slabels{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mut);margin-bottom:10px}
+  input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,.12);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--bg);box-shadow:0 0 0 2px rgba(139,92,246,.35)}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border:none;border-radius:50%;background:var(--accent);cursor:pointer}
+  .sval{text-align:center;margin-top:8px;font-size:.85rem;color:#a78bfa;font-weight:500}
+
+  .btn{display:block;width:100%;padding:15px;border:none;border-radius:12px;font-size:1.05rem;font-weight:500;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--accent2),var(--accent));margin-top:30px}
+  .btn:hover{opacity:.92}
+  .warn{color:#f5a623;font-size:.85rem;margin-top:12px;text-align:center;display:none}
+
+  #result{display:none;margin:30px 0 10px}
+  .brand,.hero h1{font-family:'Syne',sans-serif;letter-spacing:.02em}
+  .card{position:relative;width:100%;max-width:380px;margin:0 auto;aspect-ratio:4/5;border-radius:22px;overflow:hidden;color:#fff;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .card .art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+  .card .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:7rem}
+  .card .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,12,.92) 0%,rgba(8,8,12,.74) 22%,rgba(8,8,12,.28) 42%,rgba(8,8,12,0) 58%)}
+  .card .logo{position:absolute;top:15px;left:18px;font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;letter-spacing:.04em;opacity:.92;z-index:2}
+  .card .logo span{color:var(--accent)}
+  .card .txt{position:absolute;left:0;right:0;bottom:0;padding:0 22px 30px;text-align:center;z-index:2;text-transform:lowercase}
+  .card .cw{font-family:'Syne',sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.08em;line-height:1;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+  .card .aw{font-family:'Syne',sans-serif;font-weight:800;font-size:1.7rem;line-height:1;color:#fff;margin-top:3px;text-shadow:0 3px 20px rgba(0,0,0,.75)}
+  .card .phrases{margin-top:11px;display:flex;flex-direction:column;gap:6px}
+  .card .ph-line{font-size:.8rem;line-height:1.35;color:rgba(255,255,255,.92);text-shadow:0 1px 8px rgba(0,0,0,.7)}
+  .card .ph-line.col{font-style:normal}
+  .card .url{position:absolute;right:12px;bottom:8px;font-family:'Syne',sans-serif;font-weight:700;letter-spacing:.06em;font-size:.6rem;color:rgba(255,255,255,.6);z-index:3}
+  .matchnote{font-size:.8rem;color:var(--mut);text-align:center;margin-top:12px}
+  .card-note{font-size:.82rem;color:var(--mut);text-align:center;margin-top:12px}
+  .resbtns{display:flex;gap:10px;margin:16px auto 0;max-width:340px;justify-content:center}
+  .resbtns button{flex:1;min-width:0;padding:11px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);cursor:pointer;font-size:.88rem}
+  .resbtns button:hover{background:rgba(255,255,255,.12)}
+  .community{display:block;width:100%;margin-top:14px;padding:15px;border-radius:12px;border:none;cursor:pointer;color:#fff;font-weight:600;font-size:1rem;background:linear-gradient(135deg,#10b981,#059669)}
+  .community:hover{opacity:.92}
+
+  footer{text-align:center;color:var(--mut);font-size:.8rem;padding:30px 20px 50px;border-top:1px solid var(--line);margin-top:40px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Animal<span>Me</span></div>
+  <div class="langs">
+    <button id="lang-en" class="on" onclick="setLang('en')">EN</button>
+    <button id="lang-cz" onclick="setLang('cz')">CZ</button>
+  </div>
+</div>
+
+<div class="hero">
+  <h1 id="heroTitle">What is your spirit animal?</h1>
+  <p id="heroSub"></p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="ptext" id="ptext">0 / 26</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro-wrap">
+    <img class="intro-img" src="COLL.jpg" alt="">
+    <div class="intro-badge" id="introBadge"></div>
+  </div>
+  <div id="quiz"></div>
+  <button class="btn" id="genBtn" onclick="generate()"></button>
+  <div class="warn" id="warn"></div>
+
+  <div id="result">
+    <h3 style="text-align:center;color:var(--mut);font-weight:500;margin-bottom:14px" id="resHead"></h3>
+    <div class="card" id="card">
+      <img id="cImg" class="art" alt="">
+      <div class="ph" id="cEmoji"></div>
+      <div class="scrim"></div>
+      <div class="txt">
+        <div class="cw" id="cColorWord"></div>
+        <div class="aw" id="cAnimalWord"></div>
+        <div class="phrases" id="cPhrases"></div>
+      </div>
+      <div class="url">animal-me.com</div>
+    </div>
+    <div class="card-note" id="cardNote"></div>
+    <div class="resbtns">
+      <button onclick="downloadCard()" id="btnDl"></button>
+      <button onclick="restart()" id="btnRestart"></button>
+    </div>
+  </div>
+</div>
+
+<footer id="footer"></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/*PURE_START*/
+/* ---------- ANIMALS ---------- */
+const ANIMALS = {
+  SOK:{g:'m',emoji:'🦅',cz:{name:'sokol',disp:'Sokol',tag:'Soustředěný a precizní — jde rovnou k cíli.',traits:['Soustředěný','Rozhodný','Precizní'],rel:'Ví, co chce, a jde za tím napřímo — spolehlivý a věrný partner.'},en:{name:'Falcon',disp:'Falcon',tag:'Focused and precise — straight to the goal.',traits:['Focused','Decisive','Precise'],rel:'Knows what they want and goes for it head-on — a reliable, loyal partner.'}},
+  LIS:{g:'f',emoji:'🦊',cz:{name:'liška',disp:'Liška',tag:'Bystrá hlava, která se nikdy nenudí.',traits:['Bystrá','Zvědavá','Vynalézavá'],rel:'Udrží jiskru i konverzaci, miluje souznění myšlenek.'},en:{name:'Fox',disp:'Fox',tag:'A sharp mind that never gets bored.',traits:['Sharp','Curious','Resourceful'],rel:'Keeps the spark and the conversation alive; loves a meeting of minds.'}},
+  SOV:{g:'f',emoji:'🦉',cz:{name:'sova',disp:'Sova',tag:'Klidná moudrost, která vidí do hloubky.',traits:['Moudrá','Pozorná','Vyrovnaná'],rel:'Bezpečný přístav, který naslouchá a promyslí.'},en:{name:'Owl',disp:'Owl',tag:'Calm wisdom that sees deep.',traits:['Wise','Attentive','Composed'],rel:'A safe harbour that listens and thinks things through.'}},
+  DEL:{g:'m',emoji:'🐬',cz:{name:'delfín',disp:'Delfín',tag:'Radost a empatie v jednom.',traits:['Hravý','Empatický','Vnímavý'],rel:'Vnáší lehkost a intuitivně cítí, co druhý potřebuje.'},en:{name:'Dolphin',disp:'Dolphin',tag:'Joy and empathy in one.',traits:['Playful','Empathetic','Perceptive'],rel:'Brings lightness and intuitively senses what others need.'}},
+  PAN:{g:'m',emoji:'🐆',cz:{name:'panter',disp:'Panter',tag:'Tichá sebejistota s tajemstvím.',traits:['Sebejistý','Elegantní','Nezávislý'],rel:'Přitažlivě tajemný, dává prostor i hloubku.'},en:{name:'Panther',disp:'Panther',tag:'Quiet confidence with a hint of mystery.',traits:['Confident','Elegant','Independent'],rel:'Alluringly mysterious; gives both space and depth.'}},
+  JEL:{g:'m',emoji:'🦌',cz:{name:'jelen',disp:'Jelen',tag:'Důstojný klid, u kterého se dá zakotvit.',traits:['Důstojný','Vyrovnaný','Laskavý'],rel:'Klidná jistota a tichá opora.'},en:{name:'Stag',disp:'Stag',tag:'Dignified calm you can anchor to.',traits:['Dignified','Steady','Kind'],rel:'Calm certainty and quiet support.'}},
+  LAB:{g:'f',emoji:'🦢',cz:{name:'labuť',disp:'Labuť',tag:'Ladná elegance a klid.',traits:['Elegantní','Ladná','Vyrovnaná'],rel:'Nespěchá, ale když si vybere, je věrná na celý život — s grácií a klidem.'},en:{name:'Swan',disp:'Swan',tag:'Graceful elegance and calm.',traits:['Elegant','Graceful','Serene'],rel:"Takes their time, but once they choose, they're loyal for life — with grace and calm."}},
+  VYD:{g:'f',emoji:'🦦',cz:{name:'vydra',disp:'Vydra',tag:'Mistr v dělání radosti z všedního dne.',traits:['Hravá','Spontánní','Bezstarostná'],rel:'Snadná na blízkost, promění obyčejný den v dobrodružství.'},en:{name:'Otter',disp:'Otter',tag:'A master of making everyday joyful.',traits:['Playful','Spontaneous','Carefree'],rel:'Easy to get close to; turns an ordinary day into an adventure.'}},
+  KOL:{g:'m',emoji:'🐦',cz:{name:'kolibřík',disp:'Kolibřík',tag:'Jiskra, která ochutnává všechno.',traits:['Jiskřivý','Zvědavý','Energický'],rel:'Nikdy nuda, přináší pestrost a chuť objevovat.'},en:{name:'Hummingbird',disp:'Hummingbird',tag:'A spark that tastes everything.',traits:['Vibrant','Curious','Energetic'],rel:'Never boring; brings variety and a hunger to explore.'}},
+  MED:{g:'m',emoji:'🐻',cz:{name:'medvěd',disp:'Medvěd',tag:'Hřejivá síla a bezpečné objetí.',traits:['Vřelý','Ochranitelský','Klidný'],rel:'Spolehlivá opora, ve které je bezpečno.'},en:{name:'Bear',disp:'Bear',tag:'Warm strength and a safe embrace.',traits:['Warm','Protective','Calm'],rel:'A dependable support; an embrace where it feels safe.'}},
+  ORL:{g:'m',emoji:'🦅',cz:{name:'orel',disp:'Orel',tag:'Vize a směr z ptačí perspektivy.',traits:['Cílevědomý','Bystrozraký','Samostatný'],rel:'Ví, kam jde, a táhne vztah k vyšším cílům; ladí s partnerem, který má vlastní směr.'},en:{name:'Eagle',disp:'Eagle',tag:'Vision and direction from above.',traits:['Driven','Sharp-eyed','Independent'],rel:'Knows where they are going and lifts the relationship toward bigger goals.'}},
+  LEV:{g:'m',emoji:'🦁',cz:{name:'lev',disp:'Lev',tag:'Hřejivé charisma, které stojí v čele.',traits:['Charismatický','Odvážný','Velkorysý'],rel:'Hrdě stojí za svými lidmi a je přirozeným středem dění.'},en:{name:'Lion',disp:'Lion',tag:'Warm charisma that leads.',traits:['Charismatic','Brave','Generous'],rel:'Proudly stands by their people and is a natural centre of things.'}},
+  TUC:{g:'m',emoji:'🐧',cz:{name:'tučňák',disp:'Tučňák',tag:'Oddanost s humorem — typ „na celý život".',traits:['Oddaný','Věrný','Společenský'],rel:'Bere blízkost vážně, ale s nadhledem a smíchem.'},en:{name:'Penguin',disp:'Penguin',tag:"Devotion with humour — the 'for life' type.",traits:['Devoted','Loyal','Sociable'],rel:'Takes closeness seriously, but with perspective and a laugh.'}},
+  PND:{g:'f',emoji:'🐼',cz:{name:'panda',disp:'Panda',tag:'Klidná pohoda a tichý šarm.',traits:['Vnímavá','Klidná','Okouzlující'],rel:'Nenucená a vyrovnaná; komu se otevře, s tím sdílí svůj klidný, hřejivý svět.'},en:{name:'Panda',disp:'Panda',tag:'Calm ease and quiet charm.',traits:['Perceptive','Calm','Charming'],rel:'Easygoing and balanced; shares a calm, warm world with those they let in.'}}
+};
+
+/* ---------- COLORS ---------- */
+const COLORS = {
+  RUD:{hex:'#C1121F',cz:{name:'Rudá',adjM:'Rudý',adjF:'Rudá',tr:['Vášnivá','Intenzivní','Živá']},en:{name:'Red',adj:'Red',tr:['Passionate','Intense','Vivid']}},
+  JAN:{hex:'#FFB300',cz:{name:'Jantarová',adjM:'Jantarový',adjF:'Jantarová',tr:['Hravá','Optimistická','Zářivá']},en:{name:'Amber',adj:'Amber',tr:['Playful','Optimistic','Radiant']}},
+  LOS:{hex:'#FA8072',cz:{name:'Lososová',adjM:'Lososový',adjF:'Lososová',tr:['Vřelá','Empatická','Otevřená']},en:{name:'Salmon',adj:'Salmon',tr:['Warm','Empathetic','Open']}},
+  OLI:{hex:'#6B8E23',cz:{name:'Olivová',adjM:'Olivový',adjF:'Olivová',tr:['Vyrovnaná','Stabilní','Pevná']},en:{name:'Olive',adj:'Olive',tr:['Balanced','Stable','Grounded']}},
+  MAT:{hex:'#3EB489',cz:{name:'Mátová',adjM:'Mátový',adjF:'Mátová',tr:['Svěží','Nezávislá','Jasná']},en:{name:'Mint',adj:'Mint',tr:['Fresh','Independent','Clear']}},
+  SAF:{hex:'#2563EB',cz:{name:'Safírová',adjM:'Safírový',adjF:'Safírová',tr:['Hloubavá','Spolehlivá','Přemýšlivá']},en:{name:'Sapphire',adj:'Sapphire',tr:['Deep','Dependable','Thoughtful']}},
+  SVE:{hex:'#8E4585',cz:{name:'Švestková',adjM:'Švestkový',adjF:'Švestková',tr:['Tvořivá','Snivá','Tajemná']},en:{name:'Plum',adj:'Plum',tr:['Creative','Dreamy','Mysterious']}}
+};
+
+/* ---------- PHRASES (karta): 2x zvíře (povaha) + 1x barva (jak působíš) ---------- */
+const ANIMAL_PH = {
+  SOK:{cz:['Soustředíš se na cíl a nenecháš se snadno rozhodit.','Rozhoduješ se rychle a věcně, na základě faktů.'],en:["You stay locked on your goal and aren't easily thrown off.","You decide quickly and matter-of-factly, based on facts."]},
+  LIS:{cz:['Rychle chápeš souvislosti a baví tě hledat nová řešení.','Přizpůsobíš se situaci a najdeš cestu i tam, kde ostatní vidí slepou uličku.'],en:["You grasp connections fast and enjoy finding new solutions.","You adapt to the situation and find a way where others see a dead end."]},
+  SOV:{cz:['Než se rozhodneš, věci si v klidu promyslíš do hloubky.','Dobíjíš se o samotě a potřebuješ ticho na zpracování.'],en:["You think things through deeply and calmly before deciding.","You recharge alone and need quiet to process."]},
+  DEL:{cz:['Intuitivně vnímáš nálady druhých a umíš lidi propojovat.','Energii bereš z lidí a vnášíš do situací lehkost.'],en:["You intuitively sense others' moods and bring people together.","You draw energy from people and bring lightness to situations."]},
+  PAN:{cz:['Jdeš si vlastní cestou a nepotřebuješ schválení okolí.','Blízkost dáváš jen vybraným lidem, ale pak naplno.'],en:["You go your own way and don't need others' approval.","You give closeness only to a chosen few — but then fully."]},
+  JEL:{cz:['Máš vyrovnaný charakter a udržuješ si nadhled i pod tlakem.','Lidem kolem sebe dáváš pocit klidu a stability.'],en:["You have a balanced character and keep perspective under pressure.","You give the people around you a sense of calm and stability."]},
+  LAB:{cz:['Ke vztahům i rozhodnutím přistupuješ s klidem a nespěcháš.','Když si někoho vybereš, držíš slovo a zůstáváš věrný/á.'],en:["You approach relationships and decisions calmly, without rushing.","Once you choose someone, you keep your word and stay loyal."]},
+  VYD:{cz:['Žiješ spontánně a umíš si užít přítomný okamžik.','Snadno navazuješ kontakt a vnášíš do dní lehkost.'],en:["You live spontaneously and savour the present moment.","You connect easily and bring lightness to the everyday."]},
+  KOL:{cz:['Zajímá tě spousta věcí najednou a rychle se nadchneš.','Potřebuješ pestrost a změnu — rutina tě brzdí.'],en:["You're curious about many things at once and get excited fast.","You need variety and change; routine holds you back."]},
+  MED:{cz:['Jsi spolehlivá opora a o své blízké se umíš postarat.','Ceníš si bezpečí, klidu a pevného zázemí.'],en:["You're a dependable support and look after those close to you.","You value safety, calm and a solid home base."]},
+  ORL:{cz:['Vidíš věci z nadhledu a míříš za dlouhodobými cíli.','Jdeš si za svým samostatně a neopíráš se o druhé.'],en:["You see the big picture and aim for long-term goals.","You pursue your path independently, without leaning on others."]},
+  LEV:{cz:['Přirozeně přebíráš vedení a strhneš ostatní za sebou.','Nebojíš se riskovat a stojíš si za svým.'],en:["You naturally take the lead and carry others with you.","You're not afraid to take risks and stand your ground."]},
+  TUC:{cz:['Vztahy bereš vážně a jsi v nich oddaný/á a spolehlivý/á.','Máš rád/a řád a jistotu pevných vazeb.'],en:["You take relationships seriously and are devoted and reliable.","You like order and the security of strong bonds."]},
+  PND:{cz:['Jsi citlivý/á a vnímáš věci, které ostatním unikají.','Otevíráš se pomalu, ale komu věříš, tomu dáš hřejivou blízkost.'],en:["You're sensitive and notice what others miss.","You open up slowly, but give warm closeness to those you trust."]}
+};
+const COLOR_PH = {
+  RUD:{cz:'Působíš vášnivě a s velkou energií.',en:"You come across as passionate and full of energy."},
+  JAN:{cz:'Působíš vřele a šíříš kolem sebe dobrou náladu.',en:"You come across as warm and spread good cheer around you."},
+  LOS:{cz:'Působíš laskavě a otevřeně, lidé se u tebe cítí přijatí.',en:"You come across as kind and open; people feel accepted around you."},
+  OLI:{cz:'Působíš pevně a sebejistě.',en:"You come across as solid and self-assured."},
+  MAT:{cz:'Působíš svěže, nezávisle a s jasným nadhledem.',en:"You come across as fresh, independent and clear-headed."},
+  SAF:{cz:'Působíš klidně a spolehlivě, s vnitřní hloubkou.',en:"You come across as calm and dependable, with inner depth."},
+  SVE:{cz:'Působíš tajemně a kreativně — je v tobě co objevovat.',en:"You come across as mysterious and creative — there is much to discover."}
+};
+
+/* ---------- SCORING ---------- */
+const ANIMAL_SCORES = {
+  q2:{'velmi citlivý':{PND:2,SOV:1,JEL:1},'středně':{LIS:1},'málo citlivý':{SOK:1,MED:1},'vyhledávající':{LEV:2,PAN:1,KOL:1,VYD:1,DEL:1}},
+  q4:{'brzy ráno':{JEL:1,MED:1,SOK:1},'dopoledne':{LIS:1,TUC:1,LAB:1},'odpoledne':{VYD:1,PND:1},'večer':{SOV:2,PAN:1,KOL:1}},
+  q5:{'vytrvalostní':{SOK:1,JEL:1},'silový':{MED:1,LEV:1},'flexibilita':{LAB:1,PND:1,SOV:1},'adrenalin':{PAN:2,LEV:1,KOL:1},'tanec':{DEL:1,VYD:1},'žádný':{SOV:1,PND:1}},
+  q8:{'samota doma':{SOV:2,PND:1,LAB:1},'blízký člověk':{TUC:1,MED:1,JEL:1},'malá skupina':{LIS:1,TUC:1,DEL:1},'velká akce':{LEV:2,DEL:1,VYD:1},'příroda':{JEL:2,MED:1,PAN:1}},
+  q9:{'přímý':{SOK:2,LEV:1,ORL:1},'diplomatický':{JEL:1,TUC:1,DEL:1},'nepřímo':{PND:1,LAB:1},'písemně':{SOV:1,LIS:1},'činy':{MED:1,PAN:1}},
+  q10:{'lídr':{LEV:2,ORL:2},'stratég':{SOK:2,ORL:1,SOV:1},'spojovatel':{DEL:2,TUC:1},'nezávislý':{PAN:1,LIS:1,SOK:1},'pozorovatel':{SOV:1,PND:1,LAB:1,JEL:1}},
+  q11:{'hned':{VYD:1,LEV:1,DEL:1},'středně':{LIS:1,TUC:1},'pomalu':{PND:2,LAB:1,SOV:1},'selektivně':{PAN:1,LAB:1,SOK:1}},
+  q16:{'analyticky':{SOV:2,SOK:1,ORL:1},'intuitivně':{DEL:1,PND:1,JEL:1},'vizuálně':{LIS:1,KOL:1},'diskuzí':{DEL:1,LEV:1},'prakticky':{MED:1,VYD:1,SOK:1}},
+  q17:{'generalista':{KOL:2,LIS:1,DEL:1},'specialista':{ORL:1,SOV:1,SOK:1},'T-shape':{LIS:1,JEL:1},'sériový':{KOL:1,VYD:1}},
+  q19:{'krátce':{KOL:2,VYD:1,DEL:1},'střední':{LIS:1,TUC:1},'dlouho':{SOV:1,JEL:1,MED:1,LAB:1},'hyperfokus':{ORL:2,SOK:1,PAN:1},'záleží':{LIS:1,KOL:1}},
+  q24:{'zvědavost':{LIS:2,KOL:1,SOV:1},'mistrovství':{ORL:2,SOK:1},'svoboda':{PAN:2,KOL:1,VYD:1,LAB:1},'dopad':{DEL:1,LEV:1,TUC:1},'bezpečí':{MED:2,JEL:1,TUC:1,PND:1},'uznání':{LEV:2,ORL:1}},
+  q25:{'vzrušení':{KOL:1,VYD:1,LEV:1,PAN:1,DEL:1},'opatrný optimismus':{LIS:1,SOK:1,JEL:1},'úzkost':{PND:1,MED:1},'odpor':{JEL:1,MED:1,TUC:1},'záleží':{SOV:1,LAB:1}},
+  q27:{'město':{LEV:1,KOL:1,DEL:1},'příroda':{JEL:2,MED:1,SOK:1,PAN:1},'předměstí':{TUC:1,PND:1},'u vody':{LAB:2,DEL:1,VYD:1},'kdekoliv':{LIS:1}},
+  q28:{'hodně':{TUC:1,MED:1,SOK:1,ORL:1},'mírná':{JEL:1,SOV:1,TUC:1,LAB:1},'málo':{VYD:1,KOL:1,LIS:1},'žádná':{VYD:2,PAN:1,KOL:1}}
+};
+const COLOR_SCORES = {
+  q7:{'fyzicky':{OLI:1},'emocionálně':{LOS:1,RUD:1},'kognitivně':{SAF:1},'útlum':{SAF:1,MAT:1},'akce':{RUD:1,JAN:1}},
+  q13:{'úzkost':{SAF:1,LOS:1},'smutek':{SAF:2,SVE:1},'hněv':{RUD:2},'nadšení':{JAN:2,RUD:1},'klid':{OLI:2,MAT:1}},
+  q14:{'mluvením':{LOS:2,JAN:1},'přemýšlením':{SAF:2,MAT:1},'tělem':{RUD:1,OLI:1},'kreativně':{SVE:2,JAN:1},'potlačením':{MAT:1,OLI:1}},
+  q15:{'finanční stabilita':{OLI:1},'blízcí lidé':{LOS:2},'kontrola':{MAT:1,OLI:1},'smysl':{SAF:1,SVE:1},'zdraví':{OLI:1}},
+  q18:{'aphantasia':{MAT:1,SAF:1},'slabá':{OLI:1},'průměrná':{},'silná':{SVE:1},'hyperphantasia':{SVE:2}},
+  q20:{'fyzický vzhled':{RUD:1},'inteligence':{SAF:1,MAT:1},'humor':{JAN:2},'laskavost':{LOS:2},'ambice':{RUD:1},'tajemnost':{SVE:2}},
+  q22:{'jistý':{OLI:2},'úzkostný':{LOS:1,SAF:1},'vyhýbavý':{MAT:2},'dezorganizovaný':{SVE:1,RUD:1},'nevím':{SAF:1}},
+  q23:{'centrální':{RUD:2},'důležitá':{RUD:1,JAN:1},'kontextuální':{LOS:1,SVE:1},'okrajová':{MAT:1},'minimální':{SAF:1,MAT:1}},
+  q30:{'tvorba':{SVE:2},'poznání':{SAF:1,MAT:1},'péče':{LOS:2},'krása':{SVE:1,JAN:1},'spojení':{LOS:1,JAN:1},'řád':{OLI:2}}
+};
+// slider buckets -> color points
+function sliderColor(q,val){
+  if(q==='q12'){ if(val>=8)return{RUD:2,LOS:1}; if(val>=6)return{JAN:1,LOS:1}; if(val>=4)return{OLI:1}; return{OLI:1,MAT:1,SAF:1}; }
+  if(q==='q21'){ if(val>=8)return{LOS:2}; if(val>=6)return{LOS:1,JAN:1}; if(val>=4)return{OLI:1}; return{MAT:2}; }
+  if(q==='q26'){ if(val<=3)return{SVE:1,JAN:1}; if(val>=8)return{RUD:1,OLI:1}; return{}; }
+  return{};
+}
+const TIEBREAK_A=['PAN','SOK','ORL','LAB','PND','SOV','LIS','JEL','MED','TUC','VYD','KOL','DEL','LEV'];
+const TIEBREAK_C=['SVE','SAF','MAT','RUD','OLI','LOS','JAN'];
+
+function addPts(acc,map){ for(const k in map) acc[k]=(acc[k]||0)+map[k]; }
+function pickTop(pts,order){
+  let best=null,bestv=-1;
+  for(const k of order){ const v=pts[k]||0; if(v>bestv){bestv=v;best=k;} }
+  return bestv>0?best:order[0];
+}
+// answers: {qid: value | [values] | number}
+function computeResult(answers){
+  const a={},c={};
+  for(const q in ANIMAL_SCORES){
+    const ans=answers[q]; if(ans==null) continue;
+    if(Array.isArray(ans)) ans.forEach(v=>{ if(ANIMAL_SCORES[q][v]) addPts(a,ANIMAL_SCORES[q][v]); });
+    else if(ANIMAL_SCORES[q][ans]) addPts(a,ANIMAL_SCORES[q][ans]);
+  }
+  for(const q in COLOR_SCORES){
+    const ans=answers[q]; if(ans==null) continue;
+    if(Array.isArray(ans)) ans.forEach(v=>{ if(COLOR_SCORES[q][v]) addPts(c,COLOR_SCORES[q][v]); });
+    else if(COLOR_SCORES[q][ans]) addPts(c,COLOR_SCORES[q][ans]);
+  }
+  ['q12','q21','q26'].forEach(q=>{ if(typeof answers[q]==='number') addPts(c,sliderColor(q,answers[q])); });
+  return { animal: pickTop(a,TIEBREAK_A), color: pickTop(c,TIEBREAK_C), animalPts:a, colorPts:c };
+}
+function composeName(animalKey,colorKey,lang){
+  const A=ANIMALS[animalKey], C=COLORS[colorKey];
+  if(lang==='en') return C.en.adj+' '+A.en.name;
+  const adj = A.g==='m'? C.cz.adjM : C.cz.adjF;
+  return adj+' '+A.cz.name;
+}
+/*PURE_END*/
+
+/* ---------- QUESTIONS ---------- */
+const SECTIONS={
+  1:{cz:'Senzorické preference',en:'Sensory preferences'},
+  2:{cz:'Tělesné a fyziologické',en:'Body & physiology'},
+  3:{cz:'Sociální a komunikační',en:'Social & communication'},
+  4:{cz:'Emocionální profil',en:'Emotional profile'},
+  5:{cz:'Kognitivní styl',en:'Cognitive style'},
+  6:{cz:'Vztahové a intimní',en:'Relationships & intimacy'},
+  7:{cz:'Motivace a hodnoty',en:'Motivation & values'},
+  8:{cz:'Prostředí a životní styl',en:'Environment & lifestyle'},
+  9:{cz:'Existenciální nastavení',en:'Existential'}
+};
+function o(v,cz,en){return {v,cz,en};}
+const QUESTIONS=[
+ {id:'q2',sec:1,type:'radio',cz:'Jak citlivý/á jsi na smyslové podněty?',en:'How sensitive are you to sensory stimulation?',opts:[o('velmi citlivý','Velmi citlivý/á — hluk, vůně a světlo mě rychle vyčerpávají','Very sensitive — noise, smells and light tire me fast'),o('středně','Středně — něco mi vadí, většinou to zvládám','Moderate — some things bother me, mostly fine'),o('málo citlivý','Spíš odolný/á — potřebuji silnější podněty','Pretty resilient — I need stronger stimulation'),o('vyhledávající','Aktivně vyhledávám intenzivní podněty','I actively seek intense stimulation')]},
+ {id:'q4',sec:2,type:'radio',cz:'Kdy se cítíš nejproduktivněji?',en:'When do you feel most productive?',opts:[o('brzy ráno','Brzy ráno (5–9h)','Early morning (5–9)'),o('dopoledne','Dopoledne (9–13h)','Late morning (9–13)'),o('odpoledne','Odpoledne (13–18h)','Afternoon (13–18)'),o('večer','Večer a v noci (18h+)','Evening & night (18+)')]},
+ {id:'q5',sec:2,type:'multi',cz:'Jaký pohyb tě přirozeně láká?',en:'What kind of movement draws you?',opts:[o('vytrvalostní','Vytrvalostní — běh, plavání, kolo','Endurance — running, swimming, cycling'),o('silový','Silový — posilovna, váhy','Strength — gym, weights'),o('flexibilita','Flexibilita a klid — jóga, protahování','Flexibility & calm — yoga, stretching'),o('adrenalin','Adrenalin — lezení, bojové sporty','Adrenaline — climbing, combat sports'),o('tanec','Tanec a rytmus','Dance & rhythm'),o('žádný','Pohyb mě netáhne','Movement is not my thing')]},
+ {id:'q7',sec:2,type:'radio',cz:'Jak tvoje tělo reaguje na stres?',en:'How does your body react to stress?',opts:[o('fyzicky','Fyzicky — napětí, bolesti, spánek','Physically — tension, aches, sleep'),o('emocionálně','Emocionálně — úzkost, podrážděnost','Emotionally — anxiety, irritability'),o('kognitivně','Kognitivně — ruminace, závodění myšlenek','Cognitively — rumination, racing thoughts'),o('útlum','Útlumem — apatie, únava','Shutdown — apathy, fatigue'),o('akce','Akcí — nakopne mě to','Action — it fires me up')]},
+ {id:'q8',sec:3,type:'radio',cz:'Co tě nejlíp dobije po náročném týdnu?',en:'What recharges you after a hard week?',opts:[o('samota doma','Den úplně sám/sama','A day completely alone'),o('blízký člověk','Čas s jedním blízkým člověkem','Time with one close person'),o('malá skupina','Malá skupina přátel','A small group of friends'),o('velká akce','Velká akce, párty, noví lidé','A big event, party, new people'),o('příroda','Příroda — pryč od všeho','Nature — away from it all')]},
+ {id:'q9',sec:3,type:'radio',cz:'Jak komunikuješ, když ti na něčem záleží?',en:'How do you communicate when it matters?',opts:[o('přímý','Přímo a jasně','Directly and clearly'),o('diplomatický','Diplomaticky','Diplomatically'),o('nepřímo','Nepřímo, náznaky','Indirectly, with hints'),o('písemně','Radši písemně','I prefer writing'),o('činy','Činy, ne slovy','Through actions, not words')]},
+ {id:'q10',sec:3,type:'radio',cz:'Jaká je tvoje role ve skupině?',en:'Your natural role in a group?',opts:[o('lídr','Přirozeně vedu','I naturally lead'),o('stratég','Stratég v pozadí','Strategist in the background'),o('spojovatel','Spojovatel — stmeluju lidi','Connector — I bring people together'),o('nezávislý','Nezávislý hráč','Independent player'),o('pozorovatel','Pozorovatel','Observer')]},
+ {id:'q11',sec:3,type:'radio',cz:'Jak rychle se otevíráš novým lidem?',en:'How quickly do you open up to new people?',opts:[o('hned','Rychle a otevřeně','Quickly and openly'),o('středně','Postupně','Gradually'),o('pomalu','Pomalu, trvá to měsíce/roky','Slowly — months or years'),o('selektivně','Záleží na člověku','Depends on the person')]},
+ {id:'q12',sec:4,type:'slider',cz:'Jak intenzivně prožíváš emoce?',en:'How intensely do you feel emotions?',lcz:'Tlumeně',len:'Muted',rcz:'Velmi intenzivně',ren:'Very intense'},
+ {id:'q13',sec:4,type:'radio',cz:'Která emoce je pro tebe nejpřirozenější?',en:'Which emotion is most natural to you?',opts:[o('úzkost','Úzkost / nervozita','Anxiety / nervousness'),o('smutek','Smutek / melancholie','Sadness / melancholy'),o('hněv','Hněv / frustrace','Anger / frustration'),o('nadšení','Nadšení / zvědavost','Enthusiasm / curiosity'),o('klid','Klid / vyrovnanost','Calm / balance')]},
+ {id:'q14',sec:4,type:'radio',cz:'Jak zpracováváš těžké emoce?',en:'How do you process difficult emotions?',opts:[o('mluvením','Mluvením','By talking'),o('přemýšlením','Přemýšlením','By thinking it through'),o('tělem','Tělem — pohybem','Through the body — movement'),o('kreativně','Kreativně — tvorbou','Creatively — by making things'),o('potlačením','Rozptýlením, počkám až přejde','Distraction — I wait it out')]},
+ {id:'q15',sec:4,type:'radio',cz:'Co ti dává nejsilnější pocit bezpečí?',en:'What gives you the strongest sense of security?',opts:[o('finanční stabilita','Finanční stabilita','Financial stability'),o('blízcí lidé','Spolehliví blízcí lidé','Reliable close people'),o('kontrola','Pocit kontroly nad životem','A sense of control over my life'),o('smysl','Smysl a vnitřní kompas','Meaning and an inner compass'),o('zdraví','Zdraví a funkční tělo','Health and a working body')]},
+ {id:'q16',sec:5,type:'radio',cz:'Jak přemýšlíš, když řešíš problém?',en:'How do you think when solving a problem?',opts:[o('analyticky','Analyticky — rozložím na části','Analytically — break it into parts'),o('intuitivně','Intuitivně — odpověď cítím','Intuitively — I feel the answer'),o('vizuálně','Vizuálně — vidím to v hlavě','Visually — I see it in my head'),o('diskuzí','Diskuzí — myslím nahlas','By discussion — I think aloud'),o('prakticky','Prakticky — zkouším','Practically — I try things')]},
+ {id:'q17',sec:5,type:'radio',cz:'Jsi spíš generalista nebo specialista?',en:'Generalist or specialist?',opts:[o('generalista','Generalista — zajímá mě všechno','Generalist — interested in everything'),o('specialista','Specialista — hloubka v jednom','Specialist — depth in one thing'),o('T-shape','T-shape — široký rozhled + hloubka','T-shape — broad plus deep'),o('sériový','Sériový — jdu hloubky, pak dál','Serial — deep, then I move on')]},
+ {id:'q18',sec:5,type:'radio',cz:'Jak silná je tvoje vizuální představivost?',en:'How strong is your visual imagination?',opts:[o('aphantasia','Skoro žádná — myslím slovy','Almost none — I think in words'),o('slabá','Slabá — neurčitě','Weak — vague'),o('průměrná','Průměrná','Average'),o('silná','Silná — živé obrazy','Strong — vivid images'),o('hyperphantasia','Extrémně živá — skoro jako film','Extremely vivid — almost like a film')]},
+ {id:'q19',sec:5,type:'radio',cz:'Jak dlouho se přirozeně soustředíš?',en:'How long can you naturally focus?',opts:[o('krátce','Krátce (5–15 min)','Briefly (5–15 min)'),o('střední','Středně (20–45 min)','Medium (20–45 min)'),o('dlouho','Dlouho (1–2 h)','Long (1–2 h)'),o('hyperfokus','Hyperfokus (3+ h)','Hyperfocus (3+ h)'),o('záleží','Extrémně záleží na tématu','Extremely topic-dependent')]},
+ {id:'q20',sec:6,type:'multi',max:2,cz:'Co tě na lidech přitahuje nejvíc?',en:'What attracts you most to people?',opts:[o('fyzický vzhled','Fyzický vzhled a energie','Looks and physical energy'),o('inteligence','Inteligence a způsob myšlení','Intelligence and how they think'),o('humor','Humor a lehkost','Humour and lightness'),o('laskavost','Laskavost a empatie','Kindness and empathy'),o('ambice','Ambice a vášeň','Ambition and passion'),o('tajemnost','Tajemnost a hloubka','Mystery and depth')]},
+ {id:'q21',sec:6,type:'slider',cz:'Blízkost vs. nezávislost ve vztahu?',en:'Closeness vs. independence in a relationship?',lcz:'Maximální nezávislost',len:'Max independence',rcz:'Maximální blízkost',ren:'Max closeness'},
+ {id:'q22',sec:6,type:'radio',cz:'Jaký je tvůj attachment styl?',en:'Your attachment style?',opts:[o('jistý','Jistý — pohodlně s blízkostí i prostorem','Secure — comfortable with closeness and space'),o('úzkostný','Úzkostný — potřebuji ujištění','Anxious — I need reassurance'),o('vyhýbavý','Vyhýbavý — potřebuji prostor','Avoidant — I need space'),o('dezorganizovaný','Smíšený — chci i bojím se blízkosti','Mixed — I want closeness yet fear it'),o('nevím','Nejsem si jistý/á','Not sure')]},
+ {id:'q23',sec:6,type:'radio',cz:'Jakou roli hraje sexualita ve tvém životě?',en:'What role does sexuality play in your life?',opts:[o('centrální','Centrální — silný drive','Central — a strong drive'),o('důležitá','Důležitá, ale ne hlavní téma','Important, but not the main theme'),o('kontextuální','Záleží na kontextu','Context-dependent'),o('okrajová','Spíš okrajová','Rather peripheral'),o('minimální','Minimální až žádná','Minimal to none')]},
+ {id:'q24',sec:7,type:'radio',cz:'Co tě žene dopředu — hlavní motor?',en:'What drives you — your main motor?',opts:[o('zvědavost','Zvědavost — objevovat, učit se','Curiosity — to explore and learn'),o('mistrovství','Mistrovství — být v něčem skvělý','Mastery — to be great at something'),o('svoboda','Svoboda — dělat věci po svém','Freedom — to do things my way'),o('dopad','Dopad — dělat něco smysluplného','Impact — to do something meaningful'),o('bezpečí','Bezpečí — stabilita a klid','Security — stability and calm'),o('uznání','Uznání — být viděn a oceněn','Recognition — to be seen and valued')]},
+ {id:'q25',sec:7,type:'radio',cz:'Jak reaguješ na velkou změnu?',en:'How do you react to big change?',opts:[o('vzrušení','Vzrušením — nové = zajímavé','Excitement — new = interesting'),o('opatrný optimismus','Opatrným optimismem','Cautious optimism'),o('úzkost','Úzkostí — nejistota mě brzdí','Anxiety — uncertainty holds me back'),o('odpor','Odporem — proč měnit, co funguje','Resistance — why change what works'),o('záleží','Záleží, jestli jsem si ji vybral/a','Depends if I chose it myself')]},
+ {id:'q26',sec:7,type:'slider',cz:'Orientuješ se na proces, nebo výsledek?',en:'Are you process- or outcome-oriented?',lcz:'Čistě proces',len:'Pure process',rcz:'Čistě výsledek',ren:'Pure outcome'},
+ {id:'q27',sec:8,type:'radio',cz:'Kde se cítíš nejlíp?',en:'Where do you feel best?',opts:[o('město','Ve městě — kultura, lidi, energie','In the city — culture, people, energy'),o('příroda','V přírodě — ticho, čistý vzduch','In nature — quiet, clean air'),o('předměstí','Na předměstí — klid s dostupností','Suburbs — calm with access'),o('u vody','U vody — moře, jezero, řeka','By water — sea, lake, river'),o('kdekoliv','Kdekoliv — prostředí mě neovlivňuje','Anywhere — place barely affects me')]},
+ {id:'q28',sec:8,type:'radio',cz:'Kolik struktury a rutiny potřebuješ?',en:'How much structure and routine do you need?',opts:[o('hodně','Hodně — rutina mě drží','A lot — routine holds me together'),o('mírná','Mírná — pár pevných bodů','Moderate — a few fixed points'),o('málo','Málo — preferuji spontaneitu','Little — I prefer spontaneity'),o('žádná','Žádná — každý den jinak','None — every day different')]},
+ {id:'q30',sec:9,type:'multi',max:2,cz:'Co ti dává pocit, že život má smysl?',en:'What makes your life feel meaningful?',opts:[o('tvorba','Tvorba — vytvořit něco nového','Creation — making something new'),o('poznání','Poznání — pochopit svět','Knowledge — understanding the world'),o('péče','Péče — pomáhat druhým','Care — helping others'),o('krása','Krása — tvořit a obklopit se jí','Beauty — creating and being around it'),o('spojení','Spojení — hluboké vztahy','Connection — deep relationships'),o('řád','Řád — strukturovat a organizovat','Order — structuring and organising')]}
+];
+
+/* ---------- i18n UI ---------- */
+const UI={
+  cz:{heroTitle:'Jaké jsi zvíře?', sub:'na základě tvých reálných vlastností a preferencí', introBadge:'14 zvířat, 98 možných personalit', cardNote:'zvíře = jaký/á jsi · barva = jak působíš',
+    privacy:'Vše zůstává jen ve tvém prohlížeči. Žádné odpovědi se neodesílají ani neukládají.',
+    gen:'Zobrazit můj výsledek', warn:'Zodpověz prosím alespoň 20 otázek (zatím: {n}).',
+    multi:'Můžeš vybrat víc možností', multi2:'Vyber max. 2', resHead:'Tvůj výsledek',
+    relPrefix:'Ve vztazích: ', match:'Stejné zvíře = spřízněná povaha. Stejné zvíře i barva = vzácná shoda (1 z 98).',
+    dl:'Stáhnout', copy:'Zkopírovat text', copied:'Zkopírováno!', restart:'Začít znovu', dlErr:'Stažení se nezdařilo. Po nasazení na web bude fungovat; při otevření souboru přímo z disku to prohlížeč může blokovat.',
+    community:'Přidej se ke komunitě „{a}" — 29 Kč', soon:'Platební odkazy se brzy doplní.',
+    footer:'AnimalMe — zábavní nástroj pro sebepoznání, ne psychologická diagnostika.'},
+  en:{heroTitle:'What is your spirit animal?', sub:'according to your traits and preferences', introBadge:'14 animals, 98 possible personalities', cardNote:'animal = who you are · color = how you come across',
+    privacy:'Everything stays in your browser. No answers are sent or stored.',
+    gen:'Show my result', warn:'Please answer at least 20 questions (so far: {n}).',
+    multi:'You can pick several', multi2:'Pick max 2', resHead:'Your result',
+    relPrefix:'In relationships: ', match:'Same animal = kindred spirit. Same animal and color = a rare match (1 in 98).',
+    dl:'Download', copy:'Copy text', copied:'Copied!', restart:'Start over', dlErr:'Download failed. It will work once the site is hosted; opening the file directly from disk may block it.',
+    community:'Join the “{a}” community — 29 Kč', soon:'Payment links coming soon.',
+    footer:'AnimalMe — a fun self-discovery tool, not psychological diagnosis.'}
+};
+
+/* ---------- Community placeholder links (doplň Stripe URL) ---------- */
+const COMMUNITY_LINKS={SOK:'#',LIS:'#',SOV:'#',DEL:'#',PAN:'#',JEL:'#',LAB:'#',VYD:'#',KOL:'#',MED:'#',ORL:'#',LEV:'#',TUC:'#',PND:'#'};
+
+let LANG = 'en';
+let lastResult=null;
+const TOTAL=QUESTIONS.length;
+
+function setLang(l){ LANG=l; document.documentElement.lang = l==='cz'?'cs':'en';
+  document.getElementById('lang-cz').classList.toggle('on',l==='cz');
+  document.getElementById('lang-en').classList.toggle('on',l==='en');
+  render(); if(lastResult) showResult(lastResult,false);
+}
+
+function render(){
+  const u=UI[LANG];
+  document.getElementById('heroTitle').textContent=u.heroTitle;
+  document.getElementById('heroSub').textContent=u.sub;
+  document.getElementById('introBadge').textContent=u.introBadge;
+  document.getElementById('cardNote').textContent=u.cardNote;
+  document.getElementById('genBtn').textContent=u.gen;
+  document.getElementById('btnDl').textContent=u.dl;
+  document.getElementById('btnRestart').textContent=u.restart;
+  document.getElementById('resHead').textContent=u.resHead;
+  document.getElementById('footer').innerHTML='<div>'+u.privacy+'</div><div style="margin-top:6px;opacity:.7">'+u.footer+'</div>';
+
+  const saved=collectAnswers();
+  const quiz=document.getElementById('quiz'); quiz.innerHTML='';
+  let curSec=0;
+  QUESTIONS.forEach((q,i)=>{
+    if(q.sec!==curSec){ curSec=q.sec;
+      const sh=document.createElement('div'); sh.className='section-head';
+      sh.innerHTML='<div class="section-num">'+curSec+'</div><div class="section-title">'+SECTIONS[curSec][LANG]+'</div>';
+      const sec=document.createElement('div'); sec.className='section'; sec.appendChild(sh); sec.id='sec'+curSec; quiz.appendChild(sec);
+    }
+    const sec=document.getElementById('sec'+curSec);
+    const box=document.createElement('div'); box.className='q'; box.dataset.q=q.id;
+    let html='<div class="q-label"><span class="q-num">'+(i+1)+'.</span>'+q[LANG]+'</div>';
+    if(q.type==='multi') html+='<div class="hint">'+(q.max===2?u.multi2:u.multi)+'</div>';
+    if(q.type==='slider'){
+      const val=(saved[q.id]!=null?saved[q.id]:5);
+      html+='<div class="slider-row"><div class="slabels"><span>'+q['l'+LANG]+'</span><span>'+q['r'+LANG]+'</span></div>'
+        +'<input type="range" min="1" max="10" value="'+val+'" name="'+q.id+'" aria-label="'+q[LANG]+'">'
+        +'<div class="sval">'+val+' / 10</div></div>';
+    } else {
+      html+='<div class="options">';
+      const inputType=q.type==='multi'?'checkbox':'radio';
+      q.opts.forEach(opt=>{
+        const checked=Array.isArray(saved[q.id])?saved[q.id].includes(opt.v):saved[q.id]===opt.v;
+        html+='<label class="option'+(q.type==='multi'?' multi':'')+'">'
+          +'<input type="'+inputType+'" name="'+q.id+'" value="'+opt.v.replace(/"/g,'&quot;')+'"'+(checked?' checked':'')+(q.max?' data-max="'+q.max+'"':'')+'>'
+          +'<span class="mark"></span><span class="otext">'+opt[LANG]+'</span></label>';
+      });
+      html+='</div>';
+    }
+    box.innerHTML=html; sec.appendChild(box);
+  });
+  updateProgress();
+}
+
+function collectAnswers(){
+  const ans={};
+  QUESTIONS.forEach(q=>{
+    if(q.type==='slider'){ const el=document.querySelector('input[name="'+q.id+'"]'); if(el) ans[q.id]=parseInt(el.value,10); }
+    else if(q.type==='multi'){ const sel=[...document.querySelectorAll('input[name="'+q.id+'"]:checked')].map(e=>e.value); if(sel.length) ans[q.id]=sel; }
+    else { const el=document.querySelector('input[name="'+q.id+'"]:checked'); if(el) ans[q.id]=el.value; }
+  });
+  return ans;
+}
+
+function countAnswered(){
+  let n=0;
+  QUESTIONS.forEach(q=>{
+    if(q.type==='slider') n++; // sliders count as answered (default valid)
+    else if(q.type==='multi'){ if(document.querySelector('input[name="'+q.id+'"]:checked')) n++; }
+    else { if(document.querySelector('input[name="'+q.id+'"]:checked')) n++; }
+  });
+  return n;
+}
+function updateProgress(){
+  const n=countAnswered();
+  document.getElementById('fill').style.width=Math.round(n/TOTAL*100)+'%';
+  document.getElementById('ptext').textContent=n+' / '+TOTAL;
+}
+
+document.getElementById('quiz').addEventListener('change',e=>{
+  const t=e.target;
+  if(t.type==='checkbox'){
+    const max=t.dataset.max?parseInt(t.dataset.max,10):0;
+    if(max){ const checked=[...document.querySelectorAll('input[name="'+t.name+'"]:checked')];
+      if(checked.length>max){ checked[0].checked=false; } }
+  }
+  updateProgress();
+});
+document.getElementById('quiz').addEventListener('input',e=>{
+  if(e.target.type==='range'){ const sv=e.target.parentElement.querySelector('.sval'); if(sv) sv.textContent=e.target.value+' / 10'; }
+});
+
+function generate(){
+  const u=UI[LANG]; const n=countAnswered();
+  if(n<20){ const w=document.getElementById('warn'); w.textContent=u.warn.replace('{n}',n); w.style.display='block'; return; }
+  document.getElementById('warn').style.display='none';
+  const res=computeResult(collectAnswers());
+  lastResult=res; showResult(res,true);
+}
+
+function showResult(res,scroll){
+  const u=UI[LANG]; const Aa=ANIMALS[res.animal]; const A=Aa[LANG]; const C=COLORS[res.color];
+  const colorWord=capitalize(LANG==='en'?C.en.adj:(Aa.g==='m'?C.cz.adjM:C.cz.adjF));
+  const animalWord=capitalize(A.name);
+  const fullName=colorWord+' '+animalWord;
+  // hero image with emoji fallback: img/{ANIMAL}_{COLOR}.png e.g. img/SOV_SAF.png
+  const img=document.getElementById('cImg'), em=document.getElementById('cEmoji');
+  em.textContent=Aa.emoji; em.style.display='flex'; img.style.display='none';
+  img.alt=fullName;
+  img.onload=function(){ img.style.display='block'; em.style.display='none'; };
+  img.onerror=function(){ img.style.display='none'; em.style.display='flex'; };
+  img.src='img/'+res.animal+'_'+res.color+'.png';
+  const lightTone=tint(C.hex,0.82), darkTone=tint(C.hex,0.5);
+  const cwEl=document.getElementById('cColorWord');
+  cwEl.textContent=colorWord; cwEl.style.color=darkTone;
+  const awEl=document.getElementById('cAnimalWord');
+  awEl.textContent=animalWord; awEl.style.color=lightTone;
+  const ph=[ANIMAL_PH[res.animal][LANG][0],ANIMAL_PH[res.animal][LANG][1],COLOR_PH[res.color][LANG]];
+  document.getElementById('cPhrases').innerHTML=
+    '<div class="ph-line" style="color:'+lightTone+'">'+ph[0]+'</div>'+
+    '<div class="ph-line" style="color:'+lightTone+'">'+ph[1]+'</div>'+
+    '<div class="ph-line col" style="color:'+darkTone+'">'+ph[2]+'</div>';
+  // card gradient from color
+  const card=document.getElementById('card');
+  card.style.background='linear-gradient(150deg,'+shade(C.hex,-12)+','+shade(C.hex,-42)+')';
+  document.getElementById('result').style.display='block';
+  if(scroll) document.getElementById('result').scrollIntoView({behavior:'smooth'});
+}
+
+function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function shade(hex,p){ // p negative => darker
+  const n=parseInt(hex.slice(1),16); let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+  const f=(p<0)?(100+p)/100:1; r=Math.round(r*f); g=Math.round(g*f); b=Math.round(b*f);
+  return 'rgb('+r+','+g+','+b+')';
+}
+function tint(hex,amt){ const n=parseInt(hex.slice(1),16); let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+  r=Math.round(r+(255-r)*amt); g=Math.round(g+(255-g)*amt); b=Math.round(b+(255-b)*amt);
+  return 'rgb('+r+','+g+','+b+')'; }
+
+function downloadCard(){
+  if(typeof html2canvas==='undefined'){ alert(UI[LANG].dlErr); return; }
+  html2canvas(document.getElementById('card'),{backgroundColor:null,scale:2,useCORS:true,logging:false}).then(function(cv){
+    try{
+      const url=cv.toDataURL('image/png');
+      const a=document.createElement('a'); a.download='animalme.png'; a.href=url; a.click();
+    }catch(e){ alert(UI[LANG].dlErr); }
+  }).catch(function(){ alert(UI[LANG].dlErr); });
+}
+function copyText(){
+  if(!lastResult) return; const Aa=ANIMALS[lastResult.animal]; const A=Aa[LANG]; const Cc=COLORS[lastResult.color]; const C=Cc[LANG];
+  const cw=capitalize(LANG==='en'?Cc.en.adj:(Aa.g==='m'?Cc.cz.adjM:Cc.cz.adjF));
+  const txt=cw+' '+capitalize(A.name)+'\n'+ANIMAL_PH[lastResult.animal][LANG][0]+'\n'+ANIMAL_PH[lastResult.animal][LANG][1]+'\n'+COLOR_PH[lastResult.color][LANG]+'\nanimal-me.com';
+  navigator.clipboard.writeText(txt).then(()=>{ const b=document.getElementById('btnCopy'); const o=b.textContent; b.textContent=UI[LANG].copied; setTimeout(()=>b.textContent=o,1800); });
+}
+function joinCommunity(){
+  if(!lastResult) return; const link=COMMUNITY_LINKS[lastResult.animal];
+  if(!link||link==='#'){ alert(UI[LANG].soon); return; }
+  window.open(link,'_blank');
+}
+function restart(){
+  lastResult=null; document.getElementById('result').style.display='none';
+  render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+
+render();
+</script>
+</body>
+</html>
