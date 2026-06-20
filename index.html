@@ -480,7 +480,7 @@ function showResult(res,scroll){
   img.alt=fullName;
   img.onload=function(){ img.style.display='block'; em.style.display='none'; };
   img.onerror=function(){ img.style.display='none'; em.style.display='flex'; };
-  img.src='img/'+res.animal+'_'+res.color+'.png';
+  img.src='img/'+res.animal+'_'+res.color+'.jpg';
   const lightTone=tint(C.hex,0.82), darkTone=tint(C.hex,0.5);
   const cwEl=document.getElementById('cColorWord');
   cwEl.textContent=colorWord; cwEl.style.color=darkTone;
