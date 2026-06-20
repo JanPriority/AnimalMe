@@ -98,7 +98,7 @@
   #result{display:none;margin:30px 0 10px}
   .brand,.hero h1{font-family:'Syne',sans-serif;letter-spacing:.02em}
   .card{position:relative;width:100%;max-width:380px;margin:0 auto;aspect-ratio:4/5;border-radius:22px;overflow:hidden;color:#fff;border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 60px rgba(0,0,0,.5)}
-  .card .art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+  .card .art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:0;transition:opacity .25s ease}
   .card .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:7rem}
   .card .scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,12,.92) 0%,rgba(8,8,12,.74) 22%,rgba(8,8,12,.28) 42%,rgba(8,8,12,0) 58%)}
   .card .logo{position:absolute;top:15px;left:18px;font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;letter-spacing:.04em;opacity:.92;z-index:2}
@@ -476,10 +476,11 @@ function showResult(res,scroll){
   const fullName=colorWord+' '+animalWord;
   // hero image with emoji fallback: img/{ANIMAL}_{COLOR}.png e.g. img/SOV_SAF.png
   const img=document.getElementById('cImg'), em=document.getElementById('cEmoji');
-  em.textContent=Aa.emoji; em.style.display='flex'; img.style.display='none';
-  img.alt=fullName;
-  img.onload=function(){ img.style.display='block'; em.style.display='none'; };
-  img.onerror=function(){ img.style.display='none'; em.style.display='flex'; };
+  // no placeholder flash: hide emoji, keep image invisible until it actually loads
+  em.textContent=Aa.emoji; em.style.display='none'; img.alt=fullName;
+  img.style.display='block'; img.style.opacity='0';
+  img.onload=function(){ img.style.display='block'; img.style.opacity='1'; em.style.display='none'; };
+  img.onerror=function(){ img.style.display='none'; img.style.opacity='1'; em.style.display='flex'; };
   img.src='img/'+res.animal+'_'+res.color+'.jpg';
   const lightTone=tint(C.hex,0.82), darkTone=tint(C.hex,0.5);
   const cwEl=document.getElementById('cColorWord');
@@ -515,10 +516,21 @@ function roundRectPath(ctx,x,y,w,h,r){
 }
 function shareCard(){
   const card=document.getElementById('card');
+  const img=document.getElementById('cImg');
   if(typeof html2canvas==='undefined'){ alert(UI[LANG].dlErr); return; }
+  // emulate object-fit:cover via a background div — html2canvas renders background cover
+  // correctly (no horizontal squeeze, unlike object-fit on <img>)
+  let bg=null;
+  if(img && img.getAttribute('src') && img.complete && img.naturalWidth>0){
+    bg=document.createElement('div');
+    bg.style.cssText='position:absolute;inset:0;z-index:0;background-image:url("'+img.src+'");background-size:cover;background-position:center top;background-repeat:no-repeat';
+    img.style.visibility='hidden';
+    card.insertBefore(bg, card.firstChild);
+  }
   const pb=card.style.border; card.style.border='none';
-  html2canvas(card,{backgroundColor:null,scale:2,useCORS:true,logging:false}).then(function(cv){
-    card.style.border=pb;
+  function cleanup(){ card.style.border=pb; if(bg){ try{card.removeChild(bg);}catch(_){} } if(img) img.style.visibility=''; }
+  html2canvas(card,{backgroundColor:null,scale:3,useCORS:true,logging:false}).then(function(cv){
+    cleanup();
     try{
       const out=document.createElement('canvas'); out.width=cv.width; out.height=cv.height;
       const ctx=out.getContext('2d');
@@ -535,7 +547,7 @@ function shareCard(){
         }
       },'image/png');
     }catch(e){ alert(UI[LANG].dlErr); }
-  }).catch(function(){ card.style.border=pb; alert(UI[LANG].dlErr); });
+  }).catch(function(){ cleanup(); alert(UI[LANG].dlErr); });
 }
 function copyText(){
   if(!lastResult) return; const Aa=ANIMALS[lastResult.animal]; const A=Aa[LANG]; const Cc=COLORS[lastResult.color]; const C=Cc[LANG];
