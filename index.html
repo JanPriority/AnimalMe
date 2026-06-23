@@ -119,6 +119,15 @@
   .community:hover{opacity:.92}
 
   footer{text-align:center;color:var(--mut);font-size:.8rem;padding:30px 20px 50px;border-top:1px solid var(--line);margin-top:40px}
+
+  /* cross-sell box -> animal-us.com */
+  .xwrap{padding:0 20px}
+  .xsell{display:block;text-decoration:none;box-sizing:border-box;max-width:620px;margin:22px auto 0;padding:18px 22px;border-radius:16px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;box-shadow:0 10px 30px rgba(124,58,237,.32);transition:transform .15s ease,box-shadow .15s ease;text-align:center}
+  .xsell:hover{transform:translateY(-2px);box-shadow:0 14px 38px rgba(124,58,237,.45)}
+  .xsell .xh{font-weight:700;font-size:1.1rem;line-height:1.35}
+  .xsell .xs{margin-top:6px;font-size:.95rem;opacity:.95}
+  .xsell .xcta{display:inline-block;margin-top:12px;font-weight:700;font-size:.9rem;letter-spacing:.02em;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:8px 16px;border-radius:999px}
+  .xsell.bottom{margin-top:26px}
 </style>
 </head>
 <body>
@@ -134,6 +143,14 @@
 <div class="hero">
   <h1 id="heroTitle">Which animal are you?</h1>
   <p id="heroSub"></p>
+</div>
+
+<div class="xwrap">
+  <a id="xsTop" class="xsell" href="https://animal-us.com" target="_blank" rel="noopener">
+    <div class="xh" id="xsTopH"></div>
+    <div class="xs" id="xsTopS"></div>
+    <span class="xcta" id="xsTopC"></span>
+  </a>
 </div>
 
 <div class="progress-wrap">
@@ -170,6 +187,11 @@
       <button onclick="shareCard()" id="btnShare"></button>
       <button onclick="restart()" id="btnRestart"></button>
     </div>
+    <a id="xsBot" class="xsell bottom" href="https://animal-us.com" target="_blank" rel="noopener">
+      <div class="xh" id="xsBotH"></div>
+      <div class="xs" id="xsBotS"></div>
+      <span class="xcta" id="xsBotC"></span>
+    </a>
   </div>
 </div>
 
@@ -291,6 +313,7 @@ const UI={
     relPrefix:'Ve vztazích: ', match:'Stejné zvíře = spřízněná povaha. Stejné zvíře i barva = vzácná shoda (1 z 98).',
     share:'Sdílet', dl:'Stáhnout', copy:'Zkopírovat text', copied:'Zkopírováno!', restart:'Začít znovu', dlErr:'Stažení se nezdařilo. Po nasazení na web bude fungovat; při otevření souboru přímo z disku to prohlížeč může blokovat.',
     community:'Přidej se ke komunitě „{a}" — 29 Kč', soon:'Platební odkazy se brzy doplní.',
+    xsTitle:'Jak se k sobě hodíte? Udělejte si unikátní párovou analýzu', xsSub:'nejdůležitějších 5 minut vašeho vztahu!', xsCta:'Spustit párovou analýzu →',
     footer:'AnimalMe — zábavní nástroj pro sebepoznání, ne psychologická diagnostika.'},
   en:{heroTitle:'Which animal are you?', sub:'according to your traits and preferences', introBadge:'14 animals, 98 possible personalities', cardNote:'animal = who you are · color = how you come across',
     privacy:'Your answers are used only to compute your result and are never stored.',
@@ -299,6 +322,7 @@ const UI={
     relPrefix:'In relationships: ', match:'Same animal = kindred spirit. Same animal and color = a rare match (1 in 98).',
     share:'Share', dl:'Download', copy:'Copy text', copied:'Copied!', restart:'Start over', dlErr:'Download failed. It will work once the site is hosted; opening the file directly from disk may block it.',
     community:'Join the “{a}” community — 29 Kč', soon:'Payment links coming soon.',
+    xsTitle:'How well do you fit together? Get your unique couple analysis', xsSub:'the most important 5 minutes of your relationship!', xsCta:'Start the couple analysis →',
     footer:'AnimalMe — a fun self-discovery tool, not psychological diagnosis.'}
 };
 
@@ -326,6 +350,11 @@ function render(){
   document.getElementById('btnRestart').textContent=u.restart;
   document.getElementById('resHead').textContent=u.resHead;
   document.getElementById('footer').innerHTML='<div>'+u.privacy+'</div><div style="margin-top:6px;opacity:.7">'+u.footer+'</div>';
+  // cross-sell boxes -> animal-us.com (Czech links go to the Czech version)
+  var usUrl=(LANG==='cz')?'https://animal-us.com/?lang=cs':'https://animal-us.com';
+  [['xsTopH',u.xsTitle],['xsTopS',u.xsSub],['xsTopC',u.xsCta],['xsBotH',u.xsTitle],['xsBotS',u.xsSub],['xsBotC',u.xsCta]].forEach(function(p){var el=document.getElementById(p[0]);if(el)el.textContent=p[1];});
+  var xt=document.getElementById('xsTop'); if(xt)xt.href=usUrl;
+  var xb=document.getElementById('xsBot'); if(xb)xb.href=usUrl;
 
   const saved=collectAnswers();
   const quiz=document.getElementById('quiz'); quiz.innerHTML='';
