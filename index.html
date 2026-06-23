@@ -132,7 +132,7 @@
 </div>
 
 <div class="hero">
-  <h1 id="heroTitle">What is your spirit animal?</h1>
+  <h1 id="heroTitle">Which animal are you?</h1>
   <p id="heroSub"></p>
 </div>
 
@@ -235,72 +235,10 @@ const COLOR_PH = {
 };
 
 /* ---------- SCORING ---------- */
-const ANIMAL_SCORES = {
-  q2:{'velmi citlivý':{PND:2,SOV:1,JEL:1},'středně':{LIS:1},'málo citlivý':{SOK:1,MED:1},'vyhledávající':{LEV:2,PAN:1,KOL:1,VYD:1,DEL:1}},
-  q4:{'brzy ráno':{JEL:1,MED:1,SOK:1},'dopoledne':{LIS:1,TUC:1,LAB:1},'odpoledne':{VYD:1,PND:1},'večer':{SOV:2,PAN:1,KOL:1}},
-  q5:{'vytrvalostní':{SOK:1,JEL:1},'silový':{MED:1,LEV:1},'flexibilita':{LAB:1,PND:1,SOV:1},'adrenalin':{PAN:2,LEV:1,KOL:1},'tanec':{DEL:1,VYD:1},'žádný':{SOV:1,PND:1}},
-  q8:{'samota doma':{SOV:2,PND:1,LAB:1},'blízký člověk':{TUC:1,MED:1,JEL:1},'malá skupina':{LIS:1,TUC:1,DEL:1},'velká akce':{LEV:2,DEL:1,VYD:1},'příroda':{JEL:2,MED:1,PAN:1}},
-  q9:{'přímý':{SOK:2,LEV:1,ORL:1},'diplomatický':{JEL:1,TUC:1,DEL:1},'nepřímo':{PND:1,LAB:1},'písemně':{SOV:1,LIS:1},'činy':{MED:1,PAN:1}},
-  q10:{'lídr':{LEV:2,ORL:2},'stratég':{SOK:2,ORL:1,SOV:1},'spojovatel':{DEL:2,TUC:1},'nezávislý':{PAN:1,LIS:1,SOK:1},'pozorovatel':{SOV:1,PND:1,LAB:1,JEL:1}},
-  q11:{'hned':{VYD:1,LEV:1,DEL:1},'středně':{LIS:1,TUC:1},'pomalu':{PND:2,LAB:1,SOV:1},'selektivně':{PAN:1,LAB:1,SOK:1}},
-  q16:{'analyticky':{SOV:2,SOK:1,ORL:1},'intuitivně':{DEL:1,PND:1,JEL:1},'vizuálně':{LIS:1,KOL:1},'diskuzí':{DEL:1,LEV:1},'prakticky':{MED:1,VYD:1,SOK:1}},
-  q17:{'generalista':{KOL:2,LIS:1,DEL:1},'specialista':{ORL:1,SOV:1,SOK:1},'T-shape':{LIS:1,JEL:1},'sériový':{KOL:1,VYD:1}},
-  q19:{'krátce':{KOL:2,VYD:1,DEL:1},'střední':{LIS:1,TUC:1},'dlouho':{SOV:1,JEL:1,MED:1,LAB:1},'hyperfokus':{ORL:2,SOK:1,PAN:1},'záleží':{LIS:1,KOL:1}},
-  q24:{'zvědavost':{LIS:2,KOL:1,SOV:1},'mistrovství':{ORL:2,SOK:1},'svoboda':{PAN:2,KOL:1,VYD:1,LAB:1},'dopad':{DEL:1,LEV:1,TUC:1},'bezpečí':{MED:2,JEL:1,TUC:1,PND:1},'uznání':{LEV:2,ORL:1}},
-  q25:{'vzrušení':{KOL:1,VYD:1,LEV:1,PAN:1,DEL:1},'opatrný optimismus':{LIS:1,SOK:1,JEL:1},'úzkost':{PND:1,MED:1},'odpor':{JEL:1,MED:1,TUC:1},'záleží':{SOV:1,LAB:1}},
-  q27:{'město':{LEV:1,KOL:1,DEL:1},'příroda':{JEL:2,MED:1,SOK:1,PAN:1},'předměstí':{TUC:1,PND:1},'u vody':{LAB:2,DEL:1,VYD:1},'kdekoliv':{LIS:1}},
-  q28:{'hodně':{TUC:1,MED:1,SOK:1,ORL:1},'mírná':{JEL:1,SOV:1,TUC:1,LAB:1},'málo':{VYD:1,KOL:1,LIS:1},'žádná':{VYD:2,PAN:1,KOL:1}}
-};
-const COLOR_SCORES = {
-  q7:{'fyzicky':{OLI:1},'emocionálně':{LOS:1,RUD:1},'kognitivně':{SAF:1},'útlum':{SAF:1,MAT:1},'akce':{RUD:1,JAN:1}},
-  q13:{'úzkost':{SAF:1,LOS:1},'smutek':{SAF:2,SVE:1},'hněv':{RUD:2},'nadšení':{JAN:2,RUD:1},'klid':{OLI:2,MAT:1}},
-  q14:{'mluvením':{LOS:2,JAN:1},'přemýšlením':{SAF:2,MAT:1},'tělem':{RUD:1,OLI:1},'kreativně':{SVE:2,JAN:1},'potlačením':{MAT:1,OLI:1}},
-  q15:{'finanční stabilita':{OLI:1},'blízcí lidé':{LOS:2},'kontrola':{MAT:1,OLI:1},'smysl':{SAF:1,SVE:1},'zdraví':{OLI:1}},
-  q18:{'aphantasia':{MAT:1,SAF:1},'slabá':{OLI:1},'průměrná':{},'silná':{SVE:1},'hyperphantasia':{SVE:2}},
-  q20:{'fyzický vzhled':{RUD:1},'inteligence':{SAF:1,MAT:1},'humor':{JAN:2},'laskavost':{LOS:2},'ambice':{RUD:1},'tajemnost':{SVE:2}},
-  q22:{'jistý':{OLI:2},'úzkostný':{LOS:1,SAF:1},'vyhýbavý':{MAT:2},'dezorganizovaný':{SVE:1,RUD:1},'nevím':{SAF:1}},
-  q23:{'centrální':{RUD:2},'důležitá':{RUD:1,JAN:1},'kontextuální':{LOS:1,SVE:1},'okrajová':{MAT:1},'minimální':{SAF:1,MAT:1}},
-  q30:{'tvorba':{SVE:2},'poznání':{SAF:1,MAT:1},'péče':{LOS:2},'krása':{SVE:1,JAN:1},'spojení':{LOS:1,JAN:1},'řád':{OLI:2}}
-};
-// slider buckets -> color points
-function sliderColor(q,val){
-  if(q==='q12'){ if(val>=8)return{RUD:2,LOS:1}; if(val>=6)return{JAN:1,LOS:1}; if(val>=4)return{OLI:1}; return{OLI:1,MAT:1,SAF:1}; }
-  if(q==='q21'){ if(val>=8)return{LOS:2}; if(val>=6)return{LOS:1,JAN:1}; if(val>=4)return{OLI:1}; return{MAT:2}; }
-  if(q==='q26'){ if(val<=3)return{SVE:1,JAN:1}; if(val>=8)return{RUD:1,OLI:1}; return{}; }
-  return{};
-}
-const TIEBREAK_A=['PAN','SOK','ORL','LAB','PND','SOV','LIS','JEL','MED','TUC','VYD','KOL','DEL','LEV'];
-const TIEBREAK_C=['SVE','SAF','MAT','RUD','OLI','LOS','JAN'];
-
-function addPts(acc,map){ for(const k in map) acc[k]=(acc[k]||0)+map[k]; }
-function pickTop(pts,order){
-  let best=null,bestv=-1;
-  for(const k of order){ const v=pts[k]||0; if(v>bestv){bestv=v;best=k;} }
-  return bestv>0?best:order[0];
-}
-// answers: {qid: value | [values] | number}
-function computeResult(answers){
-  const a={},c={};
-  for(const q in ANIMAL_SCORES){
-    const ans=answers[q]; if(ans==null) continue;
-    if(Array.isArray(ans)) ans.forEach(v=>{ if(ANIMAL_SCORES[q][v]) addPts(a,ANIMAL_SCORES[q][v]); });
-    else if(ANIMAL_SCORES[q][ans]) addPts(a,ANIMAL_SCORES[q][ans]);
-  }
-  for(const q in COLOR_SCORES){
-    const ans=answers[q]; if(ans==null) continue;
-    if(Array.isArray(ans)) ans.forEach(v=>{ if(COLOR_SCORES[q][v]) addPts(c,COLOR_SCORES[q][v]); });
-    else if(COLOR_SCORES[q][ans]) addPts(c,COLOR_SCORES[q][ans]);
-  }
-  ['q12','q21','q26'].forEach(q=>{ if(typeof answers[q]==='number') addPts(c,sliderColor(q,answers[q])); });
-  return { animal: pickTop(a,TIEBREAK_A), color: pickTop(c,TIEBREAK_C), animalPts:a, colorPts:c };
-}
-function composeName(animalKey,colorKey,lang){
-  const A=ANIMALS[animalKey], C=COLORS[colorKey];
-  if(lang==='en') return C.en.adj+' '+A.en.name;
-  const adj = A.g==='m'? C.cz.adjM : C.cz.adjF;
-  return adj+' '+A.cz.name;
-}
-/*PURE_END*/
+/* ---------- scoring moved server-side ----------
+   The answer -> animal/colour mapping now lives in
+   netlify/functions/score.js and is reached via POST /api/score,
+   so it can't be read out of this page. See generate(). */
 
 /* ---------- QUESTIONS ---------- */
 const SECTIONS={
@@ -347,16 +285,16 @@ const QUESTIONS=[
 /* ---------- i18n UI ---------- */
 const UI={
   cz:{heroTitle:'Jaké jsi zvíře?', sub:'na základě tvých reálných vlastností a preferencí', introBadge:'14 zvířat, 98 možných personalit', cardNote:'zvíře = jaký/á jsi · barva = jak působíš',
-    privacy:'Vše zůstává jen ve tvém prohlížeči. Žádné odpovědi se neodesílají ani neukládají.',
-    gen:'Zobrazit můj výsledek', warn:'Zodpověz prosím alespoň 20 otázek (zatím: {n}).',
+    privacy:'Tvé odpovědi slouží jen k výpočtu výsledku a nikam se neukládají.',
+    gen:'Zobrazit můj výsledek', scoring:'Počítám…', scoreErr:'Výsledek se teď nepodařilo načíst. Zkus to prosím za chvíli znovu.', warn:'Zodpověz prosím alespoň 20 otázek (zatím: {n}).',
     multi:'Můžeš vybrat víc možností', multi2:'Vyber max. 2', resHead:'Tvůj výsledek',
     relPrefix:'Ve vztazích: ', match:'Stejné zvíře = spřízněná povaha. Stejné zvíře i barva = vzácná shoda (1 z 98).',
     share:'Sdílet', dl:'Stáhnout', copy:'Zkopírovat text', copied:'Zkopírováno!', restart:'Začít znovu', dlErr:'Stažení se nezdařilo. Po nasazení na web bude fungovat; při otevření souboru přímo z disku to prohlížeč může blokovat.',
     community:'Přidej se ke komunitě „{a}" — 29 Kč', soon:'Platební odkazy se brzy doplní.',
     footer:'AnimalMe — zábavní nástroj pro sebepoznání, ne psychologická diagnostika.'},
-  en:{heroTitle:'What is your spirit animal?', sub:'according to your traits and preferences', introBadge:'14 animals, 98 possible personalities', cardNote:'animal = who you are · color = how you come across',
-    privacy:'Everything stays in your browser. No answers are sent or stored.',
-    gen:'Show my result', warn:'Please answer at least 20 questions (so far: {n}).',
+  en:{heroTitle:'Which animal are you?', sub:'according to your traits and preferences', introBadge:'14 animals, 98 possible personalities', cardNote:'animal = who you are · color = how you come across',
+    privacy:'Your answers are used only to compute your result and are never stored.',
+    gen:'Show my result', scoring:'Computing…', scoreErr:'Could not load your result just now. Please try again in a moment.', warn:'Please answer at least 20 questions (so far: {n}).',
     multi:'You can pick several', multi2:'Pick max 2', resHead:'Your result',
     relPrefix:'In relationships: ', match:'Same animal = kindred spirit. Same animal and color = a rare match (1 in 98).',
     share:'Share', dl:'Download', copy:'Copy text', copied:'Copied!', restart:'Start over', dlErr:'Download failed. It will work once the site is hosted; opening the file directly from disk may block it.',
@@ -461,12 +399,25 @@ document.getElementById('quiz').addEventListener('input',e=>{
   if(e.target.type==='range'){ const sv=e.target.parentElement.querySelector('.sval'); if(sv) sv.textContent=e.target.value+' / 10'; }
 });
 
-function generate(){
+async function generate(){
   const u=UI[LANG]; const n=countAnswered();
-  if(n<20){ const w=document.getElementById('warn'); w.textContent=u.warn.replace('{n}',n); w.style.display='block'; return; }
-  document.getElementById('warn').style.display='none';
-  const res=computeResult(collectAnswers());
-  lastResult=res; showResult(res,true);
+  const w=document.getElementById('warn');
+  if(n<20){ w.textContent=u.warn.replace('{n}',n); w.style.display='block'; return; }
+  w.style.display='none';
+  const btn=document.getElementById('genBtn');
+  const orig=btn.textContent; btn.disabled=true; btn.textContent=u.scoring;
+  try{
+    // scoring lives on the server so the answer->animal mapping isn't in the page
+    const r=await fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({answers:collectAnswers()})});
+    if(!r.ok) throw new Error('bad status');
+    const res=await r.json();
+    if(!res||!res.animal||!res.color) throw new Error('bad result');
+    lastResult=res; showResult(res,true);
+  }catch(e){
+    w.textContent=u.scoreErr; w.style.display='block';
+  }finally{
+    btn.disabled=false; btn.textContent=orig;
+  }
 }
 
 function showResult(res,scroll){
@@ -567,7 +518,13 @@ function restart(){
   render(); window.scrollTo({top:0,behavior:'smooth'});
 }
 
-render();
+// honour ?lang= deep-links (e.g. coming from animal-us.com); accepts cz/cs/en
+(function(){
+  var m = /[?&]lang=(cz|cs|en)/i.exec(window.location.search);
+  if(m){ LANG = (m[1].toLowerCase()==='en') ? 'en' : 'cz'; }
+})();
+
+setLang(LANG);
 </script>
 </body>
 </html>

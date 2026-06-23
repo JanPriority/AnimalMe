@@ -1,0 +1,13 @@
+# Netlify config for animal-me.com
+# The site is plain static files at the repo root; the only dynamic
+# piece is the scoring function (the answer -> animal mapping).
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Pretty API path:  /api/score  ->  the score function
+[[redirects]]
+  from = "/api/score"
+  to = "/.netlify/functions/score"
+  status = 200
